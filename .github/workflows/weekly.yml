@@ -1,12 +1,10 @@
-name: Weekly Ledger refresh and deploy
+name: Weekly Ledger refresh
 
 on:
   schedule:
     # Tuesdays at 11:00 UTC (6-7am Eastern), after Monday Night Football
     - cron: '0 11 * * 2'
   workflow_dispatch:
-  push:
-    branches: [main]
 
 concurrency:
   group: ledger
@@ -14,11 +12,10 @@ concurrency:
 
 jobs:
   refresh:
-    # Skipped on ordinary pushes so uploading a file never costs voice credits
-    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -39,31 +36,7 @@ jobs:
             git commit -m "Weekly ledger refresh"
             git push
           fi
-
-  deploy:
-    needs: refresh
-    if: ${{ !cancelled() && (needs.refresh.result == 'success' || needs.refresh.result == 'skipped') }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: main
-      - name: Stage site files
-        run: |
-          mkdir -p _site
-          cp index.html ledger-core.js _site/
-          cp -r data _site/ 2>/dev/null || true
-          cp -r audio _site/ 2>/dev/null || true
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      - name: Tell GitHub Pages to rebuild the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "/repos/${{ github.repository }}/pages/builds"
