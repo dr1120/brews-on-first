@@ -655,16 +655,28 @@ const DEFAULT_LEAGUE_ID='1399584665517436928'; // used only if no weekly snapsho
 })();
 (function photo(){
   const names=['seraphina.png','seraphina.jpg','seraphina.jpeg','seraphina.webp','Seraphina.png','Seraphina.jpg','Seraphina.jpeg','Seraphina.webp','seraphina.PNG','seraphina.JPG','seraphina.JPEG'];
-  (function next(i){
-    if(i>=names.length)return;
+  function tryLoad(src,fail){
     const probe=new Image();
     probe.onload=()=>{
       const cur=document.getElementById('witch');if(!cur)return;
       probe.id='witch';probe.className='photo';probe.alt='Seraphina the sorceress';
       cur.replaceWith(probe);
     };
-    probe.onerror=()=>next(i+1);
-    probe.src=names[i]+'?v='+Date.now();
+    probe.onerror=fail;
+    probe.src=src+(src.indexOf('?')<0?'?v='+Date.now():'');
+  }
+  /* last resort: ask GitHub which image files exist, so any capitalization of seraphina.* works */
+  function fromRepo(){
+    const m=location.hostname.match(/^([^.]+)\.github\.io$/),seg=location.pathname.split('/')[1];
+    if(!m||!seg)return;
+    fetch('https://api.github.com/repos/'+m[1]+'/'+seg+'/contents/').then(r=>r.ok?r.json():[]).then(list=>{
+      const f=(list||[]).find(x=>/^seraphina\.(png|jpe?g|webp)$/i.test(x.name));
+      if(f)tryLoad(encodeURIComponent(f.name),()=>{});
+    }).catch(()=>{});
+  }
+  (function next(i){
+    if(i>=names.length){fromRepo();return;}
+    tryLoad(names[i],()=>next(i+1));
   })(0);
 })();
 </script>
