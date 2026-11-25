@@ -12,10 +12,10 @@ const VOICE = process.env.OPENAI_TTS_VOICE || 'coral';
 const STYLE = process.env.OPENAI_TTS_INSTRUCTIONS ||
   'Voice: low, smooth, sultry and unhurried, like an enchantress sharing delicious gossip with a room full of friends. ' +
   'Tone: playful, teasing, a little smug. Pacing: slow, with dramatic pauses at commas and full stops. ' +
-  'Pronounce the fantasy team names clearly.';
+  'Pronounce the fantasy team names clearly. Where you see the letters D S T, say them as three separate letters: dee, ess, tee.';
 
 const core = await readFile(new URL('./ledger-core.js', import.meta.url), 'utf8');
-const L = new Function(core + '\nreturn {buildLeague,compute,simulate,multiSummary,buildSlides,mulberry,demoRows};')();
+const L = new Function(core + '\nreturn {buildLeague,compute,simulate,multiSummary,buildSlides,mulberry,demoRows,spoken};')();
 
 const exists = async (f) => { try { await access(f); return true; } catch { return false; } };
 const warn = (m) => console.log(`::warning::${m}`);
@@ -67,7 +67,7 @@ const ST = L.compute(league);
 const sim = L.simulate(league, 5000, L.mulberry(2024));
 const SM = L.multiSummary(sim, ST);
 const slides = L.buildSlides(ST, league, SM, sim);
-const hash = createHash('sha256').update(JSON.stringify(slides.map(s => s.say)) + MODEL + VOICE + STYLE).digest('hex').slice(0, 10);
+const hash = createHash('sha256').update(JSON.stringify(slides.map(s => L.spoken(s.say))) + MODEL + VOICE + STYLE).digest('hex').slice(0, 10);
 
 /* ---------- 3. voice ---------- */
 let prev = null;
@@ -90,7 +90,7 @@ if (reuse) {
       const r = await fetch(`${OPENAI}/audio/speech`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: MODEL, voice: VOICE, input: slides[i].say, instructions: STYLE, response_format: 'mp3' }),
+        body: JSON.stringify({ model: MODEL, voice: VOICE, input: L.spoken(slides[i].say), instructions: STYLE, response_format: 'mp3' }),
       });
       if (!r.ok) throw new Error(`OpenAI ${r.status}: ${(await r.text()).slice(0, 300)}`);
       const buf = Buffer.from(await r.arrayBuffer());

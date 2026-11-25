@@ -1,6 +1,9 @@
 /* Arcane Ledger core: pure logic shared by the page and the weekly refresh job */
 const f1=x=>x.toFixed(1),f2=x=>x.toFixed(2),sg=(x,d=1)=>(x>0?'+':'')+x.toFixed(d);
 const pc=x=>Math.round(x*100)+'%';
+/* Pronunciation fixes applied only to what is spoken (captions keep the original text) */
+const PRONUNCIATIONS=[[/\bD-ST\b/gi,'D S T']];
+function spoken(t){return PRONUNCIATIONS.reduce((s,[re,to])=>s.replace(re,to),t);}
 const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 const sdev=a=>{if(a.length<2)return 0;const m=mean(a);return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1));};
 const median=a=>{const b=[...a].sort((x,y)=>x-y),n=b.length;return n?(n%2?b[(n-1)/2]:(b[n/2-1]+b[n/2])/2):0;};

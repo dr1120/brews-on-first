@@ -55,14 +55,17 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;color:var
 .stage{display:grid;grid-template-columns:270px 1fr;gap:0;border-radius:16px;overflow:hidden;border:1px solid rgba(233,196,106,.4);background:radial-gradient(600px 400px at 20% 30%,#3a2290,#0e0724 70%);box-shadow:0 0 60px rgba(162,123,255,.25)}
 @media(max-width:760px){.stage{grid-template-columns:1fr}.host{height:230px}}
 .host{position:relative;display:flex;align-items:flex-end;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(82,240,214,.18),transparent 65%)}
-#witch{height:100%;max-height:430px;width:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
-.orbglow{animation:pulse 2.4s ease-in-out infinite;transform-origin:240px 80px}
+#witch{height:100%;max-height:480px;width:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
+.orbglow{animation:pulse 2.4s ease-in-out infinite;transform-origin:240px 44px}
 @keyframes pulse{50%{transform:scale(1.25);opacity:.7}}
-.mouth-open{opacity:0}.talk .mouth-open{opacity:1;animation:talk .2s infinite alternate;transform-origin:150px 203px}.talk .mouth-shut{opacity:0}
+.mouth-open{opacity:0}.talk .mouth-open{opacity:1;animation:talk .2s infinite alternate;transform-origin:150px 140px}.talk .mouth-shut{opacity:0}
 @keyframes talk{from{transform:scaleY(.3)}to{transform:scaleY(1.5)}}
-.blink{animation:blink 5s infinite;transform-origin:150px 172px}
+.blink{animation:blink 5s infinite;transform-origin:150px 114px}
+#witch.photo{height:auto;width:100%;max-height:480px;object-fit:cover;object-position:top}
+#witch.photo.talk{animation:bob .45s infinite alternate}
+@keyframes bob{to{transform:translateY(-3px) scale(1.012)}}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
-.sway{animation:sway 6s ease-in-out infinite;transform-origin:150px 420px}
+.sway{animation:sway 6s ease-in-out infinite;transform-origin:150px 460px}
 @keyframes sway{50%{transform:rotate(1.2deg)}}
 .card{padding:26px 28px;display:flex;flex-direction:column;justify-content:center;min-height:360px}
 .kicker{font-family:var(--serif);color:var(--mana);font-size:15px;letter-spacing:.06em}
@@ -161,59 +164,125 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 20px 40p
   <p class="lede">Seraphina, Keeper of the Ledger, narrates your season. Press play (sound on for the full effect).</p>
   <div class="stage">
     <div class="host" id="host">
-      <svg id="witch" viewBox="0 0 300 420" role="img" aria-label="Seraphina the sorceress">
-        <defs>
-          <radialGradient id="orb"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#7ff"/><stop offset="1" stop-color="#7ff" stop-opacity="0"/></radialGradient>
-          <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4cf0"/><stop offset="1" stop-color="#26125f"/></linearGradient>
-          <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a2650"/><stop offset="1" stop-color="#3a0d33"/></linearGradient>
-          <linearGradient id="hat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4d29b8"/><stop offset="1" stop-color="#2a1470"/></linearGradient>
-        </defs>
-        <g class="sway">
-          <rect x="236" y="92" width="7" height="330" rx="3" fill="#7a5530"/>
-          <circle class="orbglow" cx="240" cy="80" r="40" fill="url(#orb)"/>
-          <circle cx="240" cy="80" r="13" fill="#c9fff6"/>
-          <path d="M114 238 C66 282 54 360 64 422 L134 422 L126 300 Z" fill="url(#robe)" opacity=".95"/>
-          <path d="M186 238 C226 282 240 360 236 422 L170 422 L176 300 Z" fill="url(#robe)" opacity=".95"/>
-          <path d="M96 150 C58 220 66 300 92 345 L208 345 C234 300 242 220 204 150 Z" fill="url(#hair)"/>
-          <path d="M112 240 C118 236 135 234 150 236 C165 234 182 236 188 240 C192 262 186 285 178 318 C186 335 196 350 194 374 L106 374 C104 350 114 335 122 318 C114 285 108 262 112 240 Z" fill="#f8d8c6"/>
-          <path d="M112 246 C96 272 92 302 98 330" fill="none" stroke="#f8d8c6" stroke-width="16" stroke-linecap="round"/>
-          <circle cx="98" cy="334" r="8" fill="#f8d8c6"/>
-          <path d="M188 248 C214 264 232 252 240 237" fill="none" stroke="#f8d8c6" stroke-width="16" stroke-linecap="round"/>
-          <path d="M126 292 Q150 300 174 292" fill="none" stroke="#eebfa9" stroke-width="2" opacity=".6"/>
-          <ellipse cx="150" cy="334" rx="2.6" ry="4" fill="#e3ab94"/>
-          <path d="M128 262 L146 238 M172 262 L154 238" stroke="#e9c46a" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M123 262 C133 257 146 262 148 271 C146 289 130 293 122 283 C119 275 120 267 123 262Z" fill="#e9c46a" stroke="#a8873f" stroke-width="1.5"/>
-          <path d="M177 262 C167 257 154 262 152 271 C154 289 170 293 178 283 C181 275 180 267 177 262Z" fill="#e9c46a" stroke="#a8873f" stroke-width="1.5"/>
-          <path d="M121 284 Q150 298 179 284" fill="none" stroke="#e9c46a" stroke-width="3"/>
-          <circle cx="150" cy="273" r="4.5" fill="#7a4cf0" stroke="#fff" stroke-width="1"/>
-          <circle cx="150" cy="247" r="4" fill="#52f0d6" stroke="#e9c46a" stroke-width="1.5"/>
-          <path d="M104 372 C104 392 112 408 112 422 L138 422 L136 380 Z" fill="#f8d8c6"/>
-          <path d="M196 372 C196 392 188 408 188 422 L162 422 L164 380 Z" fill="#f8d8c6"/>
-          <path d="M106 356 Q150 374 194 356 L200 380 Q150 396 100 380 Z" fill="url(#robe)" stroke="#e9c46a" stroke-width="2"/>
-          <path d="M138 366 L162 366 L168 422 L132 422 Z" fill="url(#robe)" stroke="#e9c46a" stroke-width="2"/>
-          <path d="M110 350 Q150 366 190 350" fill="none" stroke="#e9c46a" stroke-width="4"/>
-          <circle cx="150" cy="361" r="5" fill="#52f0d6" stroke="#e9c46a" stroke-width="2"/>
-          <path d="M108 404 L134 404 M166 404 L192 404" stroke="#e9c46a" stroke-width="4"/>
-          <circle cx="240" cy="233" r="9" fill="#f8d8c6"/>
-          <rect x="140" y="205" width="20" height="32" fill="#eebfa9"/>
-          <ellipse cx="150" cy="170" rx="42" ry="50" fill="#f8d8c6"/>
-          <path d="M106 166 C108 118 152 104 194 166 C178 138 140 132 106 166Z" fill="url(#hair)"/>
-          <g class="blink">
-            <ellipse cx="134" cy="173" rx="7.5" ry="5.2" fill="#fff"/><ellipse cx="166" cy="173" rx="7.5" ry="5.2" fill="#fff"/>
-            <circle cx="135" cy="173" r="3.8" fill="#27b6a4"/><circle cx="165" cy="173" r="3.8" fill="#27b6a4"/>
-            <circle cx="136" cy="171.8" r="1.1" fill="#fff"/><circle cx="166" cy="171.8" r="1.1" fill="#fff"/>
-            <path d="M124 169 Q134 161 144 168 M156 168 Q166 161 176 169" stroke="#25092b" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-          </g>
-          <path d="M126 158 Q134 154 143 158 M157 158 Q166 154 174 158" stroke="#5a1a3a" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="123" cy="191" r="7" fill="#ff8fb0" opacity=".35"/><circle cx="177" cy="191" r="7" fill="#ff8fb0" opacity=".35"/>
-          <path class="mouth-shut" d="M140 201 Q150 208 160 201" stroke="#c4254f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-          <path class="mouth-open" d="M140 200 Q150 214 160 200 Q150 205 140 200Z" fill="#b5173f"/>
-          <ellipse cx="150" cy="128" rx="80" ry="15" fill="url(#hat)" stroke="#e9c46a" stroke-width="2.5"/>
-          <path d="M102 126 C114 92 140 52 200 18 C178 58 192 96 200 126 Z" fill="url(#hat)" stroke="#e9c46a" stroke-width="2"/>
-          <path d="M104 118 Q150 132 199 118" fill="none" stroke="#e9c46a" stroke-width="5"/>
-          <text x="140" y="88" font-size="18" fill="#ffe9a8">✦</text><text x="168" y="62" font-size="12" fill="#ffe9a8">✦</text><text x="156" y="108" font-size="10" fill="#ffe9a8">✦</text>
-        </g>
-      </svg>
+      <svg id="witch" viewBox="0 0 300 460" role="img" aria-label="Seraphina the sorceress">
+<defs>
+<radialGradient id="orbc"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#9ff"/><stop offset="1" stop-color="#52f0d6" stop-opacity="0"/></radialGradient>
+<radialGradient id="halo"><stop offset="0" stop-color="#52f0d6" stop-opacity=".45"/><stop offset="1" stop-color="#52f0d6" stop-opacity="0"/></radialGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c58f77"/><stop offset=".4" stop-color="#eec2a8"/><stop offset=".8" stop-color="#f8d9c6"/><stop offset="1" stop-color="#cfeee8"/></linearGradient>
+<linearGradient id="face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3b199"/><stop offset=".5" stop-color="#f7d6c2"/><stop offset="1" stop-color="#eec4ad"/></linearGradient>
+<linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b1a45"/><stop offset=".6" stop-color="#3a0b2a"/><stop offset="1" stop-color="#170512"/></linearGradient>
+<linearGradient id="cape" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a3de0"/><stop offset="1" stop-color="#1c0c4a"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset=".5" stop-color="#e9c46a"/><stop offset="1" stop-color="#9a7428"/></linearGradient>
+<linearGradient id="silk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a5cff"/><stop offset="1" stop-color="#34188a"/></linearGradient>
+<linearGradient id="hat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a33c9"/><stop offset="1" stop-color="#1f0f55"/></linearGradient>
+<linearGradient id="hose" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b1a8a" stop-opacity=".92"/><stop offset="1" stop-color="#14083a" stop-opacity=".95"/></linearGradient>
+<radialGradient id="blush"><stop offset="0" stop-color="#ff7fa6" stop-opacity=".35"/><stop offset="1" stop-color="#ff7fa6" stop-opacity="0"/></radialGradient>
+</defs>
+<circle cx="240" cy="50" r="170" fill="url(#halo)"/>
+<g class="sway">
+<!-- staff -->
+<rect x="237.5" y="54" width="5" height="410" rx="2.5" fill="#6a4726"/>
+<rect x="237.5" y="54" width="2" height="410" fill="#a9824f" opacity=".6"/>
+<path d="M232 62 Q240 80 248 62 Q244 54 240 52 Q236 54 232 62Z" fill="url(#gold)"/>
+<circle class="orbglow" cx="240" cy="44" r="34" fill="url(#orbc)"/>
+<circle cx="240" cy="44" r="10" fill="#d9fffa"/>
+<!-- cape -->
+<path d="M112 176 C72 232 54 360 56 464 L116 464 L124 300 Z" fill="url(#cape)"/>
+<path d="M188 176 C226 232 246 360 244 464 L186 464 L178 300 Z" fill="url(#cape)"/>
+<!-- hair back -->
+<path d="M124 96 C86 122 80 204 94 262 C102 300 88 334 98 366 C112 380 126 366 128 340 L128 150 Z" fill="url(#hair)"/>
+<path d="M176 96 C210 122 218 192 204 252 C198 292 212 322 202 354 C190 366 176 356 174 332 L174 150 Z" fill="url(#hair)"/>
+<!-- legs -->
+<path d="M104 316 C99 362 104 412 113 464 L143 464 C145 412 147 362 141 322 Z" fill="url(#skin)"/>
+<path d="M196 316 C201 362 196 412 187 464 L157 464 C155 412 153 362 159 322 Z" fill="url(#skin)"/>
+<path d="M121 330 C118 370 120 410 123 450" stroke="#fff" stroke-width="2" opacity=".18" fill="none" stroke-linecap="round"/>
+<path d="M179 330 C182 370 180 410 177 450" stroke="#fff" stroke-width="2" opacity=".25" fill="none" stroke-linecap="round"/>
+<!-- stockings -->
+<path d="M106 398 Q125 410 145 398 C146 420 146 440 144 464 L113 464 C110 440 108 420 106 398Z" fill="url(#hose)"/>
+<path d="M194 398 Q175 410 155 398 C154 420 154 440 156 464 L187 464 C190 440 192 420 194 398Z" fill="url(#hose)"/>
+<path d="M105 397 Q125 410 146 397" fill="none" stroke="url(#gold)" stroke-width="3"/>
+<path d="M195 397 Q175 410 154 397" fill="none" stroke="url(#gold)" stroke-width="3"/>
+<path d="M117 318 L119 402 M183 318 L181 402" stroke="url(#gold)" stroke-width="1.6" opacity=".9"/>
+<!-- torso -->
+<path d="M112 174 C124 167 138 166 150 168 C162 166 176 167 188 174 C190 192 186 208 180 224 C174 240 170 252 170 266 C172 284 194 298 197 322 L103 322 C106 298 128 284 130 266 C130 252 126 240 120 224 C114 208 110 192 112 174 Z" fill="url(#skin)"/>
+<path d="M130 268 C128 284 112 296 106 316" fill="none" stroke="#b27d66" stroke-width="2" opacity=".35"/>
+<path d="M170 268 C172 284 190 296 194 316" fill="none" stroke="#9fe8de" stroke-width="1.6" opacity=".5"/>
+<path d="M150 236 L150 272" stroke="#b27d66" stroke-width="1.5" opacity=".22"/>
+<path d="M140 244 Q150 250 160 244" fill="none" stroke="#b27d66" stroke-width="1.2" opacity=".2"/>
+<ellipse cx="150" cy="284" rx="2.2" ry="3.6" fill="#b27d66" opacity=".7"/>
+<circle cx="150" cy="292" r="2.2" fill="#52f0d6" stroke="#e9c46a" stroke-width="1"/>
+<!-- left arm on hip -->
+<path d="M112 178 C97 202 95 230 104 254 C110 270 118 288 124 302" fill="none" stroke="#e6b9a0" stroke-width="13" stroke-linecap="round"/>
+<ellipse cx="127" cy="307" rx="7" ry="9" transform="rotate(-25 127 307)" fill="#efc7b0"/>
+<!-- right arm to staff -->
+<path d="M188 178 C206 198 226 202 238 192" fill="none" stroke="#f3cdb6" stroke-width="12" stroke-linecap="round"/>
+<ellipse cx="240" cy="192" rx="7" ry="9" fill="#f6d5c1"/>
+<!-- bralette -->
+<path d="M129 198 L145 172 M171 198 L155 172" stroke="url(#gold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M119 197 C128 190 144 195 149 205 C147 227 129 233 119 221 C114 212 114 203 119 197Z" fill="url(#gold)" stroke="#8a6a24" stroke-width="1"/>
+<path d="M181 197 C172 190 156 195 151 205 C153 227 171 233 181 221 C186 212 186 203 181 197Z" fill="url(#gold)" stroke="#8a6a24" stroke-width="1"/>
+<path d="M126 204 C132 200 140 203 143 208 M174 204 C168 200 160 203 157 208" stroke="#fff6d0" stroke-width="1.4" fill="none" opacity=".8" stroke-linecap="round"/>
+<path d="M118 223 Q150 238 182 223" fill="none" stroke="url(#gold)" stroke-width="3.5"/>
+<circle cx="150" cy="209" r="4.2" fill="#8a5cff" stroke="#fff" stroke-width="1"/>
+<path d="M148 206 Q150 216 152 206" fill="none" stroke="#a8725c" stroke-width="2" opacity=".55"/>
+<!-- neck, choker -->
+<path d="M142 146 L158 146 L161 172 C155 177 145 177 139 172 Z" fill="#e9bba2"/>
+<path d="M142 146 L158 146 L158 156 Q150 162 142 156Z" fill="#b27d66" opacity=".35"/>
+<path d="M140 163 Q150 171 160 163" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+<circle cx="150" cy="170" r="3.6" fill="#52f0d6" stroke="#e9c46a" stroke-width="1.4"/>
+<!-- belt and skirt -->
+<path d="M104 306 Q124 318 138 313 L137 390 Q116 386 97 370 Z" fill="url(#silk)"/>
+<path d="M196 306 Q176 318 162 313 L163 378 Q184 372 203 354 Z" fill="url(#silk)"/>
+<path d="M138 313 L162 313 L158 352 L150 360 L142 352Z" fill="url(#gold)"/>
+<path d="M97 370 Q116 386 137 390 M203 354 Q184 372 163 378" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+<path d="M104 306 Q150 326 196 306" fill="none" stroke="url(#gold)" stroke-width="4"/>
+<circle cx="150" cy="318" r="5" fill="#52f0d6" stroke="#e9c46a" stroke-width="2"/>
+<path d="M150 323 L150 338 M144 322 L141 334 M156 322 L159 334" stroke="url(#gold)" stroke-width="1.4"/>
+<!-- head -->
+<path d="M123 112 C123 91 136 83 150 83 C164 83 177 91 177 112 C177 132 166 152 150 155 C134 152 123 132 123 112Z" fill="url(#face)"/>
+<ellipse cx="132" cy="132" rx="9" ry="6" fill="url(#blush)"/><ellipse cx="168" cy="132" rx="9" ry="6" fill="url(#blush)"/>
+<path d="M150 116 Q146 128 151 130" fill="none" stroke="#b27d66" stroke-width="1.1" opacity=".3" stroke-linecap="round"/>
+<ellipse cx="152" cy="125" rx="1.6" ry="3" fill="#fff" opacity=".35"/>
+<!-- eyes -->
+<g class="blink">
+<ellipse cx="138" cy="113" rx="10" ry="5" fill="#6a3de0" opacity=".3"/><ellipse cx="162" cy="113" rx="10" ry="5" fill="#6a3de0" opacity=".3"/>
+<path d="M129 115 Q138 109 147 115 Q138 120 129 115Z" fill="#fff"/><path d="M153 115 Q162 109 171 115 Q162 120 153 115Z" fill="#fff"/>
+<circle cx="138.5" cy="114.6" r="3.3" fill="#1f9d8c"/><circle cx="161.5" cy="114.6" r="3.3" fill="#1f9d8c"/>
+<circle cx="138.5" cy="114.6" r="1.4" fill="#06201c"/><circle cx="161.5" cy="114.6" r="1.4" fill="#06201c"/>
+<circle cx="139.6" cy="113.4" r=".9" fill="#fff"/><circle cx="162.6" cy="113.4" r=".9" fill="#fff"/>
+<path d="M127.5 116 Q138 107.5 148 115.5 M172.5 116 Q162 107.5 152 115.5" fill="none" stroke="#12040f" stroke-width="1.7" stroke-linecap="round"/>
+<path d="M127.5 116 L124 113.5 M172.5 116 L176 113.5" stroke="#12040f" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<path d="M128 104 Q138 98.5 148 103 M152 103 Q162 98.5 172 104" fill="none" stroke="#3a1230" stroke-width="1.3" stroke-linecap="round"/>
+<!-- lips -->
+<g class="mouth-shut">
+<path d="M141 139 Q146 134.5 150 137 Q154 134.5 159 139 Q150 142.4 141 139Z" fill="#a8123a"/>
+<path d="M141 139 Q150 152 159 139 Q150 143 141 139Z" fill="#d02752"/>
+<ellipse cx="150" cy="144" rx="4" ry="1.3" fill="#fff" opacity=".45"/>
+</g>
+<g class="mouth-open">
+<path d="M141 139 Q146 134.5 150 137 Q154 134.5 159 139 Q150 142.4 141 139Z" fill="#a8123a"/>
+<path d="M143 139.5 Q150 150 157 139.5 Q150 142.5 143 139.5Z" fill="#3d0718"/>
+<path d="M142 140.5 Q150 154 158 140.5 Q150 147 142 140.5Z" fill="#d02752"/>
+</g>
+<!-- hair front -->
+<path d="M121 112 C120 84 140 72 162 77 C178 82 181 100 178 114 C172 96 158 88 142 91 C132 94 125 102 121 112Z" fill="url(#hair)"/>
+<path d="M126 132 C112 172 108 214 118 252 C122 264 128 262 130 252 C124 212 128 172 136 142Z" fill="url(#hair)"/>
+<path d="M174 134 C186 166 192 204 186 238 C184 248 178 248 177 240 C180 206 174 170 168 144Z" fill="url(#hair)"/>
+<path d="M134 80 C128 100 124 124 120 150 M170 82 C176 104 180 130 184 158" fill="none" stroke="#d65585" stroke-width="1.4" opacity=".35" stroke-linecap="round"/>
+<path d="M121 150 C108 190 106 226 112 250" fill="none" stroke="#d65585" stroke-width="1.5" opacity=".35" stroke-linecap="round"/>
+<ellipse cx="123" cy="128" rx="2.2" ry="2.2" fill="url(#gold)"/><path d="M123 130 L123 138" stroke="url(#gold)" stroke-width="1.4"/><circle cx="123" cy="140" r="2.4" fill="#52f0d6"/>
+<ellipse cx="177" cy="128" rx="2.2" ry="2.2" fill="url(#gold)"/><path d="M177 130 L177 138" stroke="url(#gold)" stroke-width="1.4"/><circle cx="177" cy="140" r="2.4" fill="#52f0d6"/>
+<!-- hat -->
+<ellipse cx="150" cy="93" rx="68" ry="10" transform="rotate(-5 150 93)" fill="#120838" opacity=".35"/>
+<path d="M92 94 C112 82 190 82 208 90 C196 100 106 102 92 94Z" fill="url(#hat)" stroke="url(#gold)" stroke-width="2"/>
+<path d="M110 88 C120 62 140 30 196 6 C176 34 184 64 198 88 C170 80 134 82 110 88Z" fill="url(#hat)" stroke="url(#gold)" stroke-width="1.6"/>
+<path d="M112 84 C140 90 170 86 198 84" fill="none" stroke="url(#gold)" stroke-width="5"/>
+<rect x="143" y="79" width="12" height="10" rx="2" fill="none" stroke="url(#gold)" stroke-width="2"/>
+<path d="M146 54 l2 5 5 .5-4 3.5 1.2 5-4.2-2.8-4.2 2.8 1.2-5-4-3.5 5-.5z" fill="#ffe9a8" opacity=".95"/>
+<path d="M172 40 a7 7 0 1 0 5 10 a5.6 5.6 0 1 1 -5 -10z" fill="#ffe9a8" opacity=".9"/>
+</g>
+</svg>
     </div>
     <div class="card" id="card"></div>
     <div class="cap" id="cap" aria-live="polite"></div>
@@ -433,7 +502,7 @@ function runSlide(i){
     const fin=()=>{if(done||my!==token)return;done=true;clearTimeout(fb);cap.textContent=text;clearInterval(typer);setTimeout(sayOne,speechOn?250:600);};
     const fb=setTimeout(fin,speechOn?text.length*130+3000:text.length*38+900);
     if(speechOn){
-      const u=new SpeechSynthesisUtterance(text);if(voice||(voice=pickVoice()))u.voice=voice;u.rate=vRate;u.pitch=vPitch;
+      const u=new SpeechSynthesisUtterance(spoken(text));if(voice||(voice=pickVoice()))u.voice=voice;u.rate=vRate;u.pitch=vPitch;
       u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);
     }
   };
@@ -582,6 +651,17 @@ const DEFAULT_LEAGUE_ID='1399584665517436928'; // used only if no weekly snapsho
   try{
     if(DEFAULT_LEAGUE_ID){setMsg('Consulting the Sleeper oracle...');ingest(await loadSleeper(DEFAULT_LEAGUE_ID),'Live from Sleeper');}
   }catch(e){setMsg('Auto-load failed ('+e.message+'). You can still summon data by hand below.','err');}
+})();
+(async function photo(){
+  for(const ext of ['png','jpg','jpeg','webp']){
+    try{
+      const r=await fetch('seraphina.'+ext,{method:'HEAD',cache:'no-cache'});
+      if(r.ok&&/image/.test(r.headers.get('content-type')||'')){
+        const img=document.createElement('img');img.id='witch';img.className='photo';img.alt='Seraphina the sorceress';img.src='seraphina.'+ext;
+        document.getElementById('witch').replaceWith(img);return;
+      }
+    }catch(_){}
+  }
 })();
 </script>
 </body>
