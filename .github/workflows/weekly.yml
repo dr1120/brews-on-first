@@ -1,0 +1,69 @@
+name: Weekly Ledger refresh and deploy
+
+on:
+  schedule:
+    # Tuesdays at 11:00 UTC (6-7am Eastern), after Monday Night Football
+    - cron: '0 11 * * 2'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ledger
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    # Skipped on ordinary pushes so uploading a file never costs voice credits
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pull scores, write script, record voice
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_TTS_VOICE: ${{ vars.OPENAI_TTS_VOICE }}
+          SLEEPER_LEAGUE_ID: ${{ vars.SLEEPER_LEAGUE_ID }}
+        run: node refresh.mjs
+      - name: Save results to the repo
+        run: |
+          git config user.name "ledger-bot"
+          git config user.email "ledger-bot@users.noreply.github.com"
+          git add data audio
+          if ! git diff --cached --quiet; then
+            git commit -m "Weekly ledger refresh"
+            git push
+          fi
+
+  deploy:
+    needs: refresh
+    if: ${{ !cancelled() && (needs.refresh.result == 'success' || needs.refresh.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Stage site files
+        run: |
+          mkdir -p _site
+          cp index.html ledger-core.js _site/
+          cp -r data _site/ 2>/dev/null || true
+          cp -r audio _site/ 2>/dev/null || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
