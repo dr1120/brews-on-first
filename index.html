@@ -62,7 +62,9 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;color:var
 .mouth-open{opacity:0}.talk .mouth-open{opacity:1;animation:talk .2s infinite alternate;transform-origin:150px 140px}.talk .mouth-shut{opacity:0}
 @keyframes talk{from{transform:scaleY(.3)}to{transform:scaleY(1.5)}}
 .blink{animation:blink 5s infinite;transform-origin:150px 114px}
-#witch.photo{height:100%;width:100%;max-height:none;object-fit:cover;object-position:center top}
+#witch.photo{height:auto;width:100%;max-height:72vh;object-fit:contain}
+.host.photo-host{height:auto;align-items:center}
+@media(max-width:760px){.host.photo-host{height:auto}}
 #witch.photo.talk{animation:bob .45s infinite alternate}
 @keyframes bob{to{transform:translateY(-3px) scale(1.012)}}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
@@ -162,10 +164,10 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 20px 40p
 
 <section id="p-oracle" class="panel">
   <h2>The Oracle</h2>
-  <p class="lede">Seraphina, Keeper of the Ledger, narrates your season. Press play (sound on for the full effect).</p>
+  <p class="lede">Dominique, Keeper of the Ledger, narrates your season. Press play (sound on for the full effect).</p>
   <div class="stage">
     <div class="host" id="host">
-      <svg id="witch" viewBox="0 0 300 460" role="img" aria-label="Seraphina the sorceress">
+      <svg id="witch" viewBox="0 0 300 460" role="img" aria-label="Dominique the sorceress">
 <defs>
 <radialGradient id="orbc"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#9ff"/><stop offset="1" stop-color="#52f0d6" stop-opacity="0"/></radialGradient>
 <radialGradient id="halo"><stop offset="0" stop-color="#52f0d6" stop-opacity=".45"/><stop offset="1" stop-color="#52f0d6" stop-opacity="0"/></radialGradient>
@@ -353,7 +355,7 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 20px 40p
 </section>
 
 </main>
-<footer>Seraphina's narration voice is AI-generated. Forged by Claude. Expected wins, all-play and the multiverse use only the weekly scores you provide.</footer>
+<footer>Dominique's narration voice is AI-generated. Forged by Claude. Expected wins, all-play and the multiverse use only the weekly scores you provide.</footer>
 
 <script src="ledger-core.js"></script>
 
@@ -449,7 +451,7 @@ function voiceChanged(){
   try{localStorage.setItem('ledgerVoice',vName);localStorage.setItem('ledgerRate',vRate);localStorage.setItem('ledgerPitch',vPitch);}catch(_){}
   voice=pickVoice();
   if(playing)startFrom(cur);
-  else if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Well, hello there, gentlemen. I am Seraphina, Keeper of the Arcane Ledger.');if(voice)u.voice=voice;u.rate=vRate;u.pitch=vPitch;setTalk(true);u.onend=u.onerror=()=>setTalk(false);speechSynthesis.speak(u);}
+  else if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Well, hello there, gentlemen. I am Dominique, Keeper of the Arcane Ledger.');if(voice)u.voice=voice;u.rate=vRate;u.pitch=vPitch;setTalk(true);u.onend=u.onerror=()=>setTalk(false);speechSynthesis.speak(u);}
 }
 
 function renderCard(i){
@@ -659,8 +661,9 @@ const DEFAULT_LEAGUE_ID='1399584665517436928'; // used only if no weekly snapsho
     const probe=new Image();
     probe.onload=()=>{
       const cur=document.getElementById('witch');if(!cur)return;
-      probe.id='witch';probe.className='photo';probe.alt='Seraphina the sorceress';
+      probe.id='witch';probe.className='photo';probe.alt='Dominique the sorceress';
       cur.replaceWith(probe);
+      const hostEl=document.getElementById('host');if(hostEl)hostEl.classList.add('photo-host');
     };
     probe.onerror=fail;
     probe.src=src+(src.indexOf('?')<0?'?v='+Date.now():'');

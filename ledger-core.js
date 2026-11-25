@@ -139,7 +139,7 @@ function buildSlides(ST,LG,SM,SIM){
   const cheated=[...SM].sort((a,b)=>(b.actual-b.mean)-(a.actual-a.mean));
   const S=[];
   S.push({k:'Welcome, mortals',h:'The Season Reading',big:`${n} houses, ${nW} weeks of war`,rows:[],
-    say:`Well, hello there, gentlemen. I am Seraphina, Keeper of the Arcane Ledger. I have gazed into the scrying pool across ${nW} weeks of battle and ${n} wizard houses. Prepare yourselves. Some of you will be flattered. Most of you will be furious.`});
+    say:`Well, hello there, gentlemen. I am Dominique, Keeper of the Arcane Ledger. I have gazed into the scrying pool across ${nW} weeks of battle and ${n} wizard houses. Prepare yourselves. Some of you will be flattered. Most of you will be furious.`});
   S.push({k:'The Council of Archmages',h:'Power Rankings',big:pw[0].team,
     rows:pw.slice(0,5).map((r,i)=>({n:`${i+1}. ${r.team}`,v:r.powerScore.toFixed(0),c:'g'})).concat([{n:`${n}. ${pw[n-1].team}`,v:pw[n-1].powerScore.toFixed(0),c:'b'}]),
     say:`First, the Council of Archmages. At the summit sits ${pw[0].team}, wielding the strongest sorcery in the realm. ${pw[1].team} and ${pw[2].team} lurk close behind. And at the bottom of the tower? ${pw[n-1].team}. The stars weep for you.`});
@@ -172,6 +172,6 @@ function buildSlides(ST,LG,SM,SIM){
     rows:[{n:tr[0].team+' (rising)',v:`${sg(tr[0].trend)} pts/game`,c:'g'},{n:tr[1].team,v:`${sg(tr[1].trend)}`,c:'g'},{n:tr[n-1].team+' (fading)',v:`${sg(tr[n-1].trend)} pts/game`,c:'b'}],
     say:`Finally, the omens. ${tr[0].team} is running hot, scoring ${f1(tr[0].trend)} points per game above their season norm over the recent weeks. ${tr[n-1].team} has gone cold, ${f1(Math.abs(tr[n-1].trend))} points below. The frost spreads.`});
   S.push({k:'The Ledger is closed',h:'Until next week',big:'Let the arguments begin',rows:[],
-    say:`That is the Ledger, boys. Copy the scroll, send it to the group chat, and watch the friendships burn. I am Seraphina. Try not to miss me.`});
+    say:`That is the Ledger, boys. Copy the scroll, send it to the group chat, and watch the friendships burn. I am Dominique. Try not to miss me.`});
   return S;
 }

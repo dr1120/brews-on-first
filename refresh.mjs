@@ -1,4 +1,4 @@
-// Weekly job: pull Sleeper scores, write Seraphina's script, record her voice with OpenAI TTS.
+// Weekly job: pull Sleeper scores, write Dominique's script, record her voice with OpenAI TTS.
 // Outputs: data/league.json, data/narration.json, audio/slide-N.mp3
 import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
